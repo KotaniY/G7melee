@@ -2,6 +2,12 @@ package BattleRobot;
 
 import java.awt.geom.Point2D;
 
+import robocode.BulletHitBulletEvent;
+import robocode.BulletHitEvent;
+import robocode.BulletMissedEvent;
+import robocode.HitByBulletEvent;
+import robocode.HitRobotEvent;
+import robocode.HitWallEvent;
 import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
 
@@ -29,8 +35,8 @@ public class Move{
 		double randomAngle = this.generateRandomAngle();
 		double randomDistance = this.generateRandomDistance();
 		if(willHitWall(randomDistance,randomAngle)) {
-			robot.setTurnRight(randomAngle);
-			robot.setAhead(-randomDistance);
+			robot.setTurnRight(180-randomAngle);
+			robot.setAhead(randomDistance);
 			return;
 		}
 		robot.setTurnRight(randomAngle);
@@ -43,7 +49,36 @@ public class Move{
 		moveAGFAngle(e);
 	}
 	
-	public void onHitByBullet(ScannedRobotEvent e) {
+	public void onHitByBullet(HitRobotEvent e) {
+		
+	}
+	
+	public void onHitWall(HitWallEvent e) {
+		robot.setTurnRight(180-robot.getHeading());
+		robot.setAhead(100);
+	}
+
+	public void onHitByBullet(HitByBulletEvent e) {
+		
+	}
+	public void onHitRobot(HitRobotEvent e) {
+	
+	}
+	public void onHitWall1(HitWallEvent e) {
+
+	}
+	//This method is called when one of your bullets hits another robot.
+	public void	onBulletHit(BulletHitEvent event) {
+		
+	}
+	
+	//This method is called when one of your bullets hits another bullet.
+	public void	onBulletHitBullet(BulletHitBulletEvent event) {
+		
+	}
+	
+	//This method is called when one of your bullets misses, i.e. hits a wall.
+	public void	onBulletMissed(BulletMissedEvent event) {
 		
 	}
 	/***
@@ -94,8 +129,8 @@ public class Move{
 		
 		// if robot will hit , move backwards
 		if(willHitWall(300,Math.toDegrees(angle))) {
-			robot.setTurnRightRadians(angle);
-			robot.setAhead(-300);
+			robot.setTurnRightRadians(180-angle);
+			robot.setAhead(300);
 			return;
 		}
 		
@@ -131,7 +166,7 @@ public class Move{
 	}
 	
 	/***
-	 * generate randomAngle range [-90,90] degrees
+	 * generate randomAngle range [-180,180] degrees
 	 * @return nextRange
 	 */
 	private double generateRandomAngle() {

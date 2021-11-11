@@ -2,6 +2,9 @@ package BattleRobot;
 
 
 import robocode.AdvancedRobot;
+import robocode.BulletHitBulletEvent;
+import robocode.BulletHitEvent;
+import robocode.BulletMissedEvent;
 import robocode.HitByBulletEvent;
 import robocode.HitRobotEvent;
 import robocode.HitWallEvent;
@@ -63,8 +66,26 @@ public class BattleRobot extends AdvancedRobot {
 	
 	}
 	public void onHitWall(HitWallEvent e) {
-		setBack(50);
-		setTurnRight(90);
+		
+		move.onHitWall(e);
+		execute();	
+	}
+	
+	//This method is called when one of your bullets hits another robot.
+	public void	onBulletHit(BulletHitEvent event) {
 		
 	}
+	
+	//This method is called when one of your bullets hits another bullet.
+	public void	onBulletHitBullet(BulletHitBulletEvent event) {
+		
+	}
+	
+	//This method is called when one of your bullets misses, i.e. hits a wall.
+	public void	onBulletMissed(BulletMissedEvent event) {
+		
+	}
+	
+
+
 }
