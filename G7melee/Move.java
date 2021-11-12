@@ -5,12 +5,15 @@ import java.awt.geom.Point2D;
 import robocode.BulletHitBulletEvent;
 import robocode.BulletHitEvent;
 import robocode.BulletMissedEvent;
-import robocode.HitByBulletEvent;
 import robocode.HitRobotEvent;
 import robocode.HitWallEvent;
 import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
-
+/***
+ * turnRightしか使わない(左に回すときは引数を負にする)
+ * @author sugiurahajime
+ *
+ */
 public class Move{
 	private G7MeleeRobot robot;
 	//final long seed =100;
@@ -29,7 +32,6 @@ public class Move{
 	public Move(G7MeleeRobot r) {
 		robot = r;
 	}
-	
 	
 	public void randomMove() {
 		double randomAngle = this.generateRandomAngle();
@@ -54,19 +56,17 @@ public class Move{
 	}
 	
 	public void onHitWall(HitWallEvent e) {
-		robot.setTurnRight(180-robot.getHeading());
+		robot.back(50);
+		double reverseAngle = calcReverseAngle(robot.getX(),robot.getY(),robot.getHeading());
+		reverseAngle = optimizeAngle(reverseAngle);
+		robot.setTurnRight(reverseAngle);
 		robot.setAhead(100);
 	}
 
-	public void onHitByBullet(HitByBulletEvent e) {
-		
-	}
 	public void onHitRobot(HitRobotEvent e) {
 	
 	}
-	public void onHitWall1(HitWallEvent e) {
 
-	}
 	//This method is called when one of your bullets hits another robot.
 	public void	onBulletHit(BulletHitEvent event) {
 		
@@ -81,6 +81,8 @@ public class Move{
 	public void	onBulletMissed(BulletMissedEvent event) {
 		
 	}
+	
+	
 	/***
 	 * 
 	 * @param distance
@@ -98,6 +100,29 @@ public class Move{
 		else{
 			return false;
 		}
+	}
+	
+	//　右に回す時の最適化
+	private double optimizeAngle(double angle) {
+		if(angle >= PI) {
+			return 2*PI - angle;
+		}else {
+			return angle;
+		}
+	}
+	/***
+	 * angle[0,360], x is 
+	 */
+	private double calcReverseAngle(double angle, double x, double y) {
+		double reverseAngle=0;
+		if(y==0 || y ==FIELD_HEIGHT) {
+			reverseAngle= PI-angle;
+		}else if(x==0 || x == FIELD_WIDTH) { 
+			reverseAngle= 2*PI - angle;
+		}else {//壁についてなかったら真後ろに回転
+			reverseAngle = PI;
+		}
+		return reverseAngle;
 	}
 	
 	
@@ -127,9 +152,9 @@ public class Move{
 		}
 		double angle = Math.atan2(xForce, yForce);
 		
-		// if robot will hit , move backwards
+		// if robot will hit , move reverse angle
 		if(willHitWall(300,Math.toDegrees(angle))) {
-			robot.setTurnRightRadians(180-angle);
+			robot.setTurnRight(Math.PI/2-angle-robot.getHeadingRadians());
 			robot.setAhead(300);
 			return;
 		}
@@ -139,17 +164,17 @@ public class Move{
 		} else if(Math.abs(angle-robot.getHeadingRadians())<Math.PI/2){
 			double rightAngle = angle-robot.getHeadingRadians();
 			
-		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle+Math.random()*PI/4));
+		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle+Math.random()*Math.PI/2));
 		    robot.setAhead(Double.POSITIVE_INFINITY);
 		} else {
 			double rightAngle = angle+Math.PI-robot.getHeadingRadians();
-		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle + Math.random()*PI/4));
+		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle + Math.random()*Math.PI/2));
 		    robot.setAhead(Double.NEGATIVE_INFINITY);
 		}
 		
 	}
 	/***
-	 * generate randomDistance range [-200,200] pixels
+	 * generate randomDistance range [-MAX_DISTANCE,MAX_DISTANCE] pixels
 	 * @return randomRange
 	 */
 	private double generateRandomDistance() {
@@ -172,14 +197,13 @@ public class Move{
 	private double generateRandomAngle() {
 		double parity = Math.random();
 		double randomAngle=0;
-		
+	
 		// turnRight(-90) turns 90 degrees to the left.
 		if(parity>=0.5) {
 			randomAngle += Math.random() * MAX_RANGE;
 		}else {		
 			randomAngle -= Math.random() * MAX_RANGE;
 		}
-		
 		return randomAngle;
 	}
 	
