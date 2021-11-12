@@ -19,7 +19,7 @@ import robocode.ScannedRobotEvent;
 *– Hide Enemy Names: disable (default)
 *– Battle Field Size: 2000 × 2000(default とは異なる)
 */
-public class G7meleeRobot extends AdvancedRobot {
+public class G7MeleeRobot extends AdvancedRobot {
 	private Gun gun;
 	private Move move;
 	private Radar radar;

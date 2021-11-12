@@ -12,7 +12,7 @@ import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
 
 public class Move{
-	private G7meleeRobot robot;
+	private G7MeleeRobot robot;
 	//final long seed =100;
 	private final double MAX_RANGE = 180;
 	private final double MAX_DISTANCE = 500; //小刻みに動く方が予測されにくいため. 
@@ -26,7 +26,7 @@ public class Move{
 	private int count;
 	
 	
-	public Move(G7meleeRobot r) {
+	public Move(G7MeleeRobot r) {
 		robot = r;
 	}
 	

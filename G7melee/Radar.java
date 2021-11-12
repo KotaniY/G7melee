@@ -10,9 +10,9 @@ import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
 
 public class Radar {
-	G7meleeRobot robot;
+	G7MeleeRobot robot;
 	
-	public Radar(G7meleeRobot r) {
+	public Radar(G7MeleeRobot r) {
 		robot = r;
 	}
 

@@ -11,10 +11,10 @@ import robocode.util.Utils;
 
 public class Gun {
 
-	G7meleeRobot robot;
+	G7MeleeRobot robot;
 	
 	
-	public Gun(G7meleeRobot r) {
+	public Gun(G7MeleeRobot r) {
 		robot = r;
 	}
 	
