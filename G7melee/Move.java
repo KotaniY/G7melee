@@ -58,7 +58,7 @@ public class Move{
 	
 	public void onHitWall(HitWallEvent e) {
 		double reverseAngle = calcReverseAngle(robot.getX(),robot.getY(),robot.getHeading());
-		reverseAngle = optimizeAngle(reverseAngle);
+		reverseAngle = optimizeAngle(reverseAngle-robot.getHeading());
 		robot.setTurnRight(reverseAngle);
 		robot.setAhead(300);
 	}
@@ -110,6 +110,8 @@ public class Move{
 			return angle;
 		}
 	}
+	
+	
 	/***
 	 * angle[0,360], x is 
 	 */
