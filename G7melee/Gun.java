@@ -24,7 +24,7 @@ public class Gun {
 		robot.setTurnGunRightRadians(Utils.normalRelativeAngle(absoluteBearing - 
 				robot.getGunHeadingRadians() + (e.getVelocity() * Math.sin(e.getHeadingRadians() - 
 						absoluteBearing) / 13.0)));
-		robot.setFire(1.5);
+		robot.setFire(1);
 	}
 
 	public void onHitByBullet(HitByBulletEvent e) {

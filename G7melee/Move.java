@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 import robocode.BulletHitBulletEvent;
 import robocode.BulletHitEvent;
 import robocode.BulletMissedEvent;
+import robocode.HitByBulletEvent;
 import robocode.HitRobotEvent;
 import robocode.HitWallEvent;
 import robocode.ScannedRobotEvent;
@@ -51,16 +52,15 @@ public class Move{
 		moveAGFAngle(e);
 	}
 	
-	public void onHitByBullet(HitRobotEvent e) {
+	public void onHitByBullet(HitByBulletEvent e) {
 		randomMove();
 	}
 	
 	public void onHitWall(HitWallEvent e) {
-		robot.back(50);
 		double reverseAngle = calcReverseAngle(robot.getX(),robot.getY(),robot.getHeading());
 		reverseAngle = optimizeAngle(reverseAngle);
 		robot.setTurnRight(reverseAngle);
-		robot.setAhead(100);
+		robot.setAhead(300);
 	}
 
 	public void onHitRobot(HitRobotEvent e) {
@@ -165,11 +165,11 @@ public class Move{
 			double rightAngle = angle-robot.getHeadingRadians();
 			
 		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle+Math.random()*Math.PI/2));
-		    robot.setAhead(Double.POSITIVE_INFINITY);
+		    robot.setAhead(300);
 		} else {
 			double rightAngle = angle+Math.PI-robot.getHeadingRadians();
 		    robot.setTurnRightRadians(Utils.normalRelativeAngle(rightAngle + Math.random()*Math.PI/2));
-		    robot.setAhead(Double.NEGATIVE_INFINITY);
+		    robot.setAhead(-300);
 		}
 		
 	}

@@ -58,7 +58,8 @@ public class G7MeleeRobot extends AdvancedRobot {
 		
 	}
 	public void onHitByBullet(HitByBulletEvent e) {
-		
+		move.onHitByBullet(e);
+		execute();
 		
 		
 	}
