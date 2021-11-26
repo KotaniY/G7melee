@@ -13,6 +13,7 @@ public class Gun {
 
 	G7MeleeRobot robot;
 
+
 	public Gun(G7MeleeRobot r) {
 		robot = r;
 	}
