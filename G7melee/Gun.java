@@ -11,7 +11,7 @@ import robocode.util.Utils;
 
 public class Gun {
 
-	G7MeleeRobot robot;//こめんとと
+	G7MeleeRobot robot;//こめんととと
 
 	
 	public Gun(G7MeleeRobot r) {
